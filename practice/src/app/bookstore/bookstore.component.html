@@ -1,0 +1,101 @@
+<div class="container-fluid">
+    <h3>Bookstore List</h3>
+    <div class="submit-form">
+        <div *ngIf="!submitted">
+            <div class="form-group">
+                <label for="title">Bookstore Name</label>
+                <input type="text" class="form-control" id="title" placeholder="Type bookstore name" required [(ngModel)]="newBookstore.bookstoreName"
+                    name="title" />
+            </div>
+            <div class="form-group">
+                <label for="description">Bookstore Address</label>
+                <input class="form-control" id="description" placeholder="Type book address" required [(ngModel)]="newBookstore.bookstoreAddress"
+                    name="description" />
+            </div>
+            <div class="form-group">
+                <label for="description">Bookstore Phone</label>
+                <input class="form-control" id="description" placeholder="Type book phone" required [(ngModel)]="newBookstore.bookstorePhone"
+                    name="description" />
+            </div>
+            <br>
+            <button (click)="saveBook()" class="btn btn-success">Submit</button>
+        </div>
+        <div *ngIf="submitted">
+            <h4>Bookstore was submitted successfully!</h4>
+            <button class="btn btn-success" (click)="addBookstore()">Add another bookstore!</button>
+        </div>
+    </div>
+
+    <p-table [value]="bookstores" dataKey="name" editMode="row">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="rowData">
+                <td>{{rowData.bookstoreName | uppercase}}</td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.bookstoreAddress">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.bookstoreAddress}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.bookstorePhone">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.bookstorePhone}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center">
+                    <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="ui-button-info" (click)="onRowEditInit(rowData)"></button>
+                    <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                        class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+                    <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                        class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+                </td>
+                <input (click)="deleteBook(rowData.bookId)" type="button" value="Delete" class="btn btn-danger">
+            </tr>
+        </ng-template>
+    </p-table>
+    <!--
+    <table class="fixed">
+        <div *ngFor="let x of bookstores; let index = index;" class="row mt-1" style="height:50px;">
+            <tbody>
+                <tr>
+                    <td>{{x.bookstoreName}}</td>
+                    <td>{{x.bookstoreAddress}}</td>
+                    <td>{{x.bookstorePhone}}</td>
+                    <input (click)="deleteBook(x.bookstoreId)" type="button" value="Delete" class="btn btn-danger">
+                </tr>
+            </tbody>
+        </div>
+    </table>
+    -->
+
+    <!--
+        <div class="col-12 col-md-10 bg-secondary d-flex
+                    justify-content-center align-items-center
+                    text-light h3">
+
+            <div class="col-9 text-light h4">{{x.bookName}}</div>
+            
+            <input (click)="deleteBook(index)" type="button"
+                value="Delete" class="col-3 btn btn-outline-light">
+            
+            <input type="button" value="Delete" class="col-3 btn btn-outline-light">
+        </div>
+        -->
+    <div class="col-3 d-none col-md-3 d-md-block"></div>
+</div>

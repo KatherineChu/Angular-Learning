@@ -1,0 +1,102 @@
+<div class="container-fluid">
+    <h3>Book List</h3>
+    <div class="submit-form">
+        <div *ngIf="!submitted">
+            <div class="form-group">
+                <label for="title">Book Name</label>
+                <input type="text" class="form-control" id="title" placeholder="Type book name" required [(ngModel)]="newBook.bookName"
+                    name="title" />
+            </div>
+            <div class="form-group">
+                <label for="description">Book Author</label>
+                <input class="form-control" id="description" placeholder="Type book author" required [(ngModel)]="newBook.bookAuthor"
+                    name="description" />
+            </div>
+            <div class="form-group">
+                <label for="description">Book Price</label>
+                <input class="form-control" id="description" required [(ngModel)]="newBook.bookPrice"
+                    name="description" />
+            </div>
+            <br>
+            <button (click)="saveBook()" class="btn btn-success">Submit</button>
+        </div>
+        <div *ngIf="submitted">
+            <h4>Book was submitted successfully!</h4>
+            <button class="btn btn-success" (click)="addBook()">Add another book!</button>
+        </div>
+    </div>
+
+    <!--
+    <table class="fixed">
+        <div *ngFor="let x of books; let index = index;" class="row mt-1" style="height:50px;">
+        <tbody>
+            <tr>
+                <td>{{x.bookName}}</td>
+                <td>{{x.bookAuthor}}</td>
+                <td>{{x.bookPrice}}</td>
+                
+            </tr>
+        </tbody>
+        </div>
+    </table>
+    -->
+
+    <p-table [value]="books" dataKey="name" editMode="row">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Price</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="rowData">
+                <td>{{rowData.bookName | uppercase}}</td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.bookAuthor">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.bookAuthor}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.bookPrice">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.bookPrice}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center">
+                    <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="ui-button-info" (click)="onRowEditInit(rowData)"></button>
+                    <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                        class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+                    <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                        class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+                </td>
+                <input (click)="deleteBook(rowData.bookId)" type="button" value="Delete" class="btn btn-danger">
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!--
+    <div class="col-12 col-md-10 bg-secondary d-flex
+            justify-content-center align-items-center
+            text-light h3">
+
+        <div class="col-9 text-light h4">{{x.bookName}}</div>
+            
+        <input (click)="deleteBook(index)" type="button"
+            value="Delete" class="col-3 btn btn-outline-light">
+            
+        <input type="button" value="Delete" class="col-3 btn btn-outline-light">
+    </div>
+    -->
+    <div class="col-3 d-none col-md-3 d-md-block"></div>
+</div>

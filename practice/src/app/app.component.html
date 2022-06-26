@@ -1,0 +1,23 @@
+<h1>Book & Bookstore</h1>
+<!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
+<nav>
+  <ul>
+    <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+    <li><a routerLink="/book" routerLinkActive="active">Book</a></li>
+    <li><a routerLink="/bookstore" routerLinkActive="active">Bookstore</a></li>
+  </ul>
+</nav>
+<router-outlet></router-outlet>
+
+<!--
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <app-book></app-book>
+    </div>
+    <div class="col-sm">
+      <app-bookstore></app-bookstore>
+    </div>
+  </div>
+</div>
+-->
